@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<templateAssemblyUploadConfig>
+  <targetURL>http://localhost</targetURL>
+  <userName>administrator</userName>
+  <password>WQ1w6wuFqc7bexasdtktFQ==</password>
+  <uploadPDB>true</uploadPDB>
+</templateAssemblyUploadConfig>

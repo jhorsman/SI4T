@@ -16,6 +16,10 @@ namespace SI4T.Templating
         public List<string> LinkFieldsToEmbed { get; set; }
         public Dictionary<string, IndexField> FieldMap { get; set; }
 
+        //jan
+        public List<string> ContextRegions { get; set; }    
+        public String Region { get; set; }
+
         /// <summary>
         /// Set the list of managed fields (either to be included or excluded based on ExcludeByDefault property)
         /// </summary>
@@ -45,6 +49,10 @@ namespace SI4T.Templating
             if (customFields != null)
             {
                 FieldMap = new Dictionary<string, IndexField>();
+
+                //jan
+                FieldMap.Add("bogussomethingfield", new IndexField { Name = "mainContentOfPage", IsMultiValue = true });
+
                 foreach (string token in customFields.Split('|'))
                 {
                     string[] items = token.Split(':');
@@ -121,6 +129,18 @@ namespace SI4T.Templating
         public virtual IndexField CustomFieldTarget(string fieldname)
         {
             return (FieldMap!=null && FieldMap.ContainsKey(fieldname)) ? FieldMap[fieldname] : null;
+        }
+
+        //jan
+        //public String CustomCatchAllFieldName { get; set; }
+        public String CustomCatchAllFieldname {
+            get{
+                if (this.Region != null && this.ContextRegions != null && this.ContextRegions.Contains(this.Region))
+                {
+                    return "contextContent";
+                }
+                return "mainContentOfPage";
+            }
         }
     }
 }

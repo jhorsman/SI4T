@@ -40,6 +40,12 @@ namespace SI4T.Templating
             this.DefaultSettings.ManagedFields = package.GetValue(Constants.FIELD_MANAGEDFIELDS) == null ? new List<string>() : package.GetValue(Constants.FIELD_MANAGEDFIELDS).Split(',').ToList();
             this.DefaultSettings.SetFieldMap(package.GetValue(Constants.FIELD_CUSTOMFIELDMAP));
             this.DefaultSettings.SetLinkFieldsToEmbedFields(package.GetValue(Constants.FIELD_LINKFIELDSTOEMBED));
+            
+            // jan
+            //todo set contextContent regions here
+            this.DefaultSettings.ContextRegions = new List<string> { };
+            this.DefaultSettings.ContextRegions.Add("3-Column");
+
             string prioString = package.GetValue(Constants.FIELD_MIN_CT_PRIO);
             int prio = 0;
             if (Int32.TryParse(prioString, out prio))
@@ -107,6 +113,13 @@ namespace SI4T.Templating
             {
                 settings.LinkFieldsToEmbed = DefaultSettings.LinkFieldsToEmbed;
             }
+
+            //jan
+            if (settings.ContextRegions == null)
+            {
+                settings.ContextRegions = DefaultSettings.ContextRegions;
+            }
+
             ProcessFields(fields, settings);
         }
 
@@ -124,6 +137,33 @@ namespace SI4T.Templating
             }
         }
 
+        //jan
+        public virtual void AppendToCustomFieldValues(string fieldName, List<object> values, bool encoded = false)
+        {
+            foreach (var val in values)  //todo this was var val instead of string val, why?
+            {
+                string value = val as string;
+                if (!String.IsNullOrWhiteSpace(value))
+                {
+                    if (encoded)
+                    {
+                        value = XhtmlToText(value);
+                    }
+                    value = " " + value + ".";
+
+                    XmlNode node = IndexData.SelectSingleNode("/*/*[local-name()='custom']/*[local-name()='" + fieldName + "']");
+                    if (node == null)
+                    {
+                        IndexData.SelectSingleNode("/*/*[local-name()='custom']").AppendChild(CreateElement(fieldName, encoded, value.ToString()));
+                    }
+                    else
+                    {
+                        node.InnerText = node.InnerText + value.ToString();// todo do something with encoding?
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Add custom field value to the index data XML
         /// </summary>
@@ -133,6 +173,12 @@ namespace SI4T.Templating
         public virtual void SetCustomFieldValue(string fieldName, object value, bool encoded = false)
         {
             SetCustomFieldValues(fieldName, new List<object> { value }, encoded);
+        }
+
+        //jan
+        public virtual void AppendToCustomFieldValue(string fieldName, object value, bool encoded = false)
+        {
+            AppendToCustomFieldValues(fieldName, new List<object> { value }, encoded);
         }
 
         /// <summary>
@@ -209,7 +255,8 @@ namespace SI4T.Templating
             //only process text fields
             if (field is TextField)
             {
-                AddToData(((TextField)field).Values, (field is XhtmlField));
+                //jan
+                AddToData(((TextField)field).Values, (field is XhtmlField), settings);
             }
             if (field is ComponentLinkField && settings.IsLinkToBeFollowed(field.Name))
             {
@@ -259,16 +306,24 @@ namespace SI4T.Templating
             {
                 values = ((TextField)field).Values;
             }
-            AddToData(values, (field is XhtmlField), targetField);
+            //jan
+            AddToData(values, (field is XhtmlField), targetField, settings);
         }
 
+        //jan
+        public virtual void AddToData(IList<string> values, bool encoded, FieldProcessorSettings settings = null)
+        {
+            AddToData(values, encoded, null, settings);
+        }
+
+        //jan
         /// <summary>
         /// Add field values into the index data 
         /// </summary>
         /// <param name="values">Values to add</param>
         /// <param name="encoded">set to true if values are already XML encoded (for example RTF content)</param>
         /// <param name="targetField">Configuration for the target (search index) field</param>
-        public virtual void AddToData(IList<string> values, bool encoded, IndexField targetField = null)
+        public virtual void AddToData(IList<string> values, bool encoded, IndexField targetField = null, FieldProcessorSettings settings = null)
         {
             foreach (var value in values)
             {
@@ -290,6 +345,13 @@ namespace SI4T.Templating
                 if (!processed)
                 {
                     IndexData.SelectSingleNode("*/*[local-name()='body']").AppendChild(CreateElement(null, encoded, value));
+                    
+                    //jan
+                    if(settings != null && settings.CustomCatchAllFieldname != null)
+                    {
+                        //SetCustomFieldValue(settings.CustomCatchAllFieldname, value, encoded);
+                        AppendToCustomFieldValue(settings.CustomCatchAllFieldname, value, encoded);
+                    }
                 }
             }
         }

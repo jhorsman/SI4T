@@ -69,7 +69,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Dev\Reference Implementation\GIT\content-management\_tools\TcmUploadAssembly.exe" "C:\Dev\Reference Implementation\GIT\content-management\_tools\config.xml" /verbose /folder:tcm:2-1425-2 $(TargetPath)</PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files (x86)\Tridion\bin\client\TcmUploadAssembly.exe" "E:\Folksam source code\SI4T\tbbs\config.xml" /verbose /folder:tcm:3-1085-2 "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

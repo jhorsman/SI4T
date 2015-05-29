@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\Tridion\bin\client\TcmUploadAssembly.exe" "E:\Folksam source code\SI4T\tbbs\config.xml" /verbose /folder:tcm:3-1085-2 "E:\Folksam source code\SI4T\tbbs\bin\Debug\SI4T.Templating.dll"
