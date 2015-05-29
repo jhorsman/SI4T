@@ -115,3 +115,5 @@ storage-extensions/dist/.DS_Store
 
 .DS_Store
 storage-extensions/target
+.idea/
+*.iml

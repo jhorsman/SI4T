@@ -109,9 +109,9 @@ public final class SearchIndexProcessor
 				this.loadIndexer(storageId, searchIndexImplementation, indexerConfiguration.get(storageId));
 				return;
 			}
-			throw new ConfigurationException("Could not find SearchIndex class. Please add the Class=package.class attribute");
+			throw new ConfigurationException("Could not find SearchIndex class for storage id " + storageId + ". Please add the Class=package.class attribute");
 		}
-		throw new ConfigurationException("Could not find Indexer configuration node. Please add the indexing class. Minimal format is: <Indexer Class=\"package.classname\" />");
+		throw new ConfigurationException("Could not find Indexer configuration node for storage id \" + storageId + \". Please add the indexing class. Minimal format is: <Indexer Class=\"package.classname\" />");
 	}
 
 	/**
