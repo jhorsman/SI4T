@@ -40,11 +40,7 @@ namespace SI4T.Templating
             this.DefaultSettings.ManagedFields = package.GetValue(Constants.FIELD_MANAGEDFIELDS) == null ? new List<string>() : package.GetValue(Constants.FIELD_MANAGEDFIELDS).Split(',').ToList();
             this.DefaultSettings.SetFieldMap(package.GetValue(Constants.FIELD_CUSTOMFIELDMAP));
             this.DefaultSettings.SetLinkFieldsToEmbedFields(package.GetValue(Constants.FIELD_LINKFIELDSTOEMBED));
-            
-            // jan
-            //todo set contextContent regions here
-            this.DefaultSettings.ContextRegions = new List<string> { };
-            this.DefaultSettings.ContextRegions.Add("3-Column");
+            this.DefaultSettings.ContextRegions = package.GetValue(Constants.FIELD_CONTEXT_REGIONS) == null ? new List<string>() : package.GetValue(Constants.FIELD_CONTEXT_REGIONS).Split(',').ToList();
 
             string prioString = package.GetValue(Constants.FIELD_MIN_CT_PRIO);
             int prio = 0;
