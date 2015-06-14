@@ -69,7 +69,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Tridion\bin\client\TcmUploadAssembly.exe" "E:\Folksam source code\SI4T\tbbs\config.xml" /verbose /folder:tcm:3-1085-2 "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files (x86)\Tridion\bin\client\TcmUploadAssembly.exe" "E:\Folksam source code\SI4T\tbbs\config.xml" /verbose /folder:tcm:3-1084-2 "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
