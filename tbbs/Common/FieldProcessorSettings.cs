@@ -15,9 +15,7 @@ namespace SI4T.Templating
         public List<string> ManagedFields { get; set; }
         public List<string> LinkFieldsToEmbed { get; set; }
         public Dictionary<string, IndexField> FieldMap { get; set; }
-
-        //jan
-        public List<string> ContextRegions { get; set; }    
+        public Dictionary<string, string> CatchAllFieldMapping { get; set; }    
         public String Region { get; set; }
 
         /// <summary>
@@ -50,9 +48,6 @@ namespace SI4T.Templating
             {
                 FieldMap = new Dictionary<string, IndexField>();
 
-                //jan
-                FieldMap.Add("bogussomethingfield", new IndexField { Name = "mainContentOfPage", IsMultiValue = true });
-
                 foreach (string token in customFields.Split('|'))
                 {
                     string[] items = token.Split(':');
@@ -80,6 +75,37 @@ namespace SI4T.Templating
                 }
             }
         }
+
+        // Example: ContextContent:2-Column,3-Column|HeroContent:Hero|MainContentOfPage:*
+        public void SetCatchAllFielMap(string catchAllFieldMap)
+        {
+            if (catchAllFieldMap != null)
+            {
+                CatchAllFieldMapping = new Dictionary<string, string>();
+
+                foreach (string token in catchAllFieldMap.Split('|'))
+                {
+                    string[] items = token.Split(':');
+                    string target = items[0];
+                    if (items.Length > 1)
+                    {
+                        foreach (string source in items[1].Split(','))
+                        {
+                            if (!FieldMap.ContainsKey(source))
+                            {
+                                CatchAllFieldMapping.Add(source, target);
+                            }
+                        }
+                    }
+                    else if (!FieldMap.ContainsKey(target))
+                    {
+                        CatchAllFieldMapping.Add(target, target);
+                    }
+                }
+            }
+        }
+
+
 
         /// <summary>
         /// Set the list of link fields to embed index data from
@@ -133,13 +159,19 @@ namespace SI4T.Templating
 
         //jan
         //public String CustomCatchAllFieldName { get; set; }
-        public String CustomCatchAllFieldname {
-            get{
-                if (this.Region != null && this.ContextRegions != null && this.ContextRegions.Contains(this.Region))
+        public String CustomCatchAllFieldname
+        {
+            get
+            {
+                if (Region != null && CatchAllFieldMapping != null && CatchAllFieldMapping.ContainsKey(Region))
                 {
-                    return "contextContent";
+                    return CatchAllFieldMapping[Region];
                 }
-                return "mainContentOfPage";
+                if (CatchAllFieldMapping != null && CatchAllFieldMapping.ContainsKey("*"))
+                {
+                    return CatchAllFieldMapping["*"];
+                }
+                return null;
             }
         }
     }
