@@ -8,7 +8,7 @@
 				<tcm:Label ElementName="SearchIndexCustomFieldMap" Metadata="false">Field Mapping</tcm:Label>
 				<tcm:Label ElementName="SearchIndexLinkFieldsToEmbed" Metadata="false">Link Fields to Embed</tcm:Label>
 				<tcm:Label ElementName="SearchIndexMinTemplatePrio" Metadata="false">Min CT Prio for Inclusion in Index Data (200=Medium)</tcm:Label>
-				<tcm:Label ElementName="SearchIndexContextRegions" Metadata="false">Context Regions</tcm:Label>
+				<tcm:Label ElementName="SearchIndexCatchallFieldMap" Metadata="false">Catchall Field mapping</tcm:Label>
 			</tcm:Labels>
 		</xsd:appinfo>
 	</xsd:annotation>
@@ -64,7 +64,7 @@
 						</xsd:appinfo>
 					  </xsd:annotation>
 					</xsd:element>
-					<xsd:element name="SearchIndexContextRegions" minOccurs="0" maxOccurs="1" type="xsd:normalizedString">
+					<xsd:element name="SearchIndexCatchallFieldMap" minOccurs="0" maxOccurs="1" type="xsd:normalizedString">
 					  <xsd:annotation>
 						<xsd:appinfo>
 							<tcm:ExtensionXml xmlns:tcm="http://www.tridion.com/ContentManager/5.0"></tcm:ExtensionXml>
