@@ -67,9 +67,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AddIndexData.cs" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Xsd\Search Indexing TBB Parameters.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Xsd\Search Indexing Template Metadata.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Tridion\bin\client\TcmUploadAssembly.exe" "E:\Folksam source code\SI4T\tbbs\config.xml" /verbose /folder:tcm:3-1084-2 "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files (x86)\Tridion\bin\client\TcmUploadAssembly.exe" "E:\Folksam source code\SI4T\tbbs\config.xml" /verbose /folder:tcm:3-2095-2 "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

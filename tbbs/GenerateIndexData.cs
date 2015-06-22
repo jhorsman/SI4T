@@ -14,6 +14,7 @@ namespace SI4T.Templating
     /// engine when publishing a Page or Dynamic Component Presentation
     /// </summary>
 	[TcmTemplateTitle("Generate Index Data")]
+    [TcmTemplateParameterSchema(ParameterSchema = "resource:SI4T.Templating.Xsd.Search Indexing TBB Parameters.xsd")]
 	public class GenerateIndexData : TemplateBase
 	{
 		public override void Transform(Engine engine, Package package)
