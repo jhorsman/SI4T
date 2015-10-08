@@ -69,9 +69,7 @@ namespace SI4T.Templating
             FieldProcessorSettings settings = new FieldProcessorSettings();
             if (template.Metadata != null)
             {
-                //jan
                 settings.Region = GetFieldValue(template.Metadata, "regionView");
-
                 settings.SetFieldMap(GetFieldValue(template.Metadata,Constants.FIELD_CUSTOMFIELDMAP));
                 settings.SetManagedFields(GetFieldValue(template.Metadata, Constants.FIELD_MANAGEDFIELDS));
                 settings.SetLinkFieldsToEmbedFields(GetFieldValue(template.Metadata, Constants.FIELD_LINKFIELDSTOEMBED));

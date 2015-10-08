@@ -8,7 +8,7 @@
 				<tcm:Label ElementName="SearchIndexCustomFieldMap" Metadata="false">Field Mapping</tcm:Label>
 				<tcm:Label ElementName="SearchIndexLinkFieldsToEmbed" Metadata="false">Link Fields to Embed</tcm:Label>
 				<tcm:Label ElementName="SearchIndexMinTemplatePrio" Metadata="false">Min CT Prio for Inclusion in Index Data (200=Medium)</tcm:Label>
-				<tcm:Label ElementName="SearchIndexCatchallFieldMap" Metadata="false">Catchall Field mapping</tcm:Label>
+				<tcm:Label ElementName="SearchIndexCatchallFieldMap" Metadata="false">Catchall Field Mapping</tcm:Label>
 			</tcm:Labels>
 		</xsd:appinfo>
 	</xsd:annotation>

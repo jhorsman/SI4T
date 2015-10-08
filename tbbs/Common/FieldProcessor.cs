@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
+using Tridion.ContentManager.ContentManagement;
 using Tridion.ContentManager.ContentManagement.Fields;
 using Tridion.ContentManager.Templating;
 
@@ -111,8 +112,6 @@ namespace SI4T.Templating
             {
                 settings.LinkFieldsToEmbed = DefaultSettings.LinkFieldsToEmbed;
             }
-
-            //jan
             if (settings.CatchAllFieldMapping == null)
             {
                 settings.CatchAllFieldMapping = DefaultSettings.CatchAllFieldMapping;
@@ -135,7 +134,7 @@ namespace SI4T.Templating
             }
         }
 
-        //jan
+        //todo add summary
         public virtual void AppendToCustomFieldValues(string fieldName, List<object> values, bool encoded = false)
         {
             foreach (var val in values)  //todo this was var val instead of string val, why?
@@ -250,12 +249,18 @@ namespace SI4T.Templating
         /// <param name="settings">field processor settings</param>
         public virtual void ProcessCatchAllField(ItemField field, FieldProcessorSettings settings = null)
         {
+            //todo the TextField and KeywordField logic in ProcessCatchAllField() and ProcessCustomField() is similar, should it be synced?
+
             //only process text fields
             if (field is TextField)
             {
-                //jan
                 AddToData(((TextField)field).Values, (field is XhtmlField), settings);
+            } else if (field is KeywordField)
+            {
+                List<String> values = ((KeywordField)field).Values.Select(k => k.Description).ToList();
+                AddToData(values, false, settings);
             }
+
             if (field is ComponentLinkField && settings.IsLinkToBeFollowed(field.Name))
             {
                 foreach (var comp in ((ComponentLinkField)field).Values)
@@ -286,7 +291,8 @@ namespace SI4T.Templating
             IList<string> values = new List<string>();
             if (field is KeywordField)
             {
-                values = ((KeywordField)field).Values.Select(k => k.Id.ItemId.ToString()).ToList();
+                //values = ((KeywordField)field).Values.Select(k => k.Id.ItemId.ToString()).ToList();
+                values = ((KeywordField)field).Values.Select(k => k.Description).ToList();
             }
             else if (field is ComponentLinkField)
             {
@@ -308,7 +314,6 @@ namespace SI4T.Templating
             AddToData(values, (field is XhtmlField), targetField, settings);
         }
 
-        //jan
         public virtual void AddToData(IList<string> values, bool encoded, FieldProcessorSettings settings = null)
         {
             AddToData(values, encoded, null, settings);

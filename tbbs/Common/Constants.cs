@@ -17,8 +17,6 @@ namespace SI4T.Templating
         public const string FIELD_CUSTOMFIELDMAP = "SearchIndexCustomFieldMap";
         public const string FIELD_LINKFIELDSTOEMBED = "SearchIndexLinkFieldsToEmbed";
         public const string FIELD_MIN_CT_PRIO = "SearchIndexMinTemplatePrio";
-        //public const string FIELD_CONTEXT_REGIONS = "SearchIndexContextRegions";
-        //todo rename SearchIndexContextRegions 
         public const string FIELD_CATCHALLFIELDMAP = "SearchIndexCatchallFieldMap";
         
         //Field values
