@@ -77,6 +77,11 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="xsd\Search Indexing Template Metadata.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>REM "$(SolutionDir)\..\_tools\TcmUploadAssembly.exe" "$(SolutionDir)\..\_tools\config.xml" /verbose /folder:tcm:2-1425-2 "$(TargetPath)"</PostBuildEvent>
